@@ -4,14 +4,14 @@ class Gfspark::App
   include ::Gfspark::Connection
   include ::Gfspark::Graph
 
-  attr_accessor :debug, :options
+  attr_accessor :debug, :options, :valid
 
   def initialize(args)
     @opt_parse_obj = opt_parser
 
     if args.nil? || args.empty?
-      help
-      return false
+      @valid = false
+      return
     end
 
     @options = load_default_settings
@@ -19,8 +19,8 @@ class Gfspark::App
 
     unless @url && @service && @section && @graph
       puts "Invalid Arguments"
-      help
-      return false
+      @valid = false
+      return
     end
 
     detect_width_and_height!
