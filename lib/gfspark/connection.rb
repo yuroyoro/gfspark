@@ -69,6 +69,11 @@ module Gfspark::Connection
         else raise "unknown method #{method}"
       end
 
+      # add basic auth header...
+      if @options[:username] && @options[:password]
+        request.basic_auth @options[:username], @options[:password]
+      end
+
       request.set_content_type("application/json")
       request.body = json.to_json unless json.nil?
 
