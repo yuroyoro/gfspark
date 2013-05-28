@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["ozaki@yuroyoro.com"]
   gem.description   = %q{GrowthForecast on Terminal}
   gem.summary       = %q{GrowthForecast Graph viewer on Terminal}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/yuroyoro/gfspark"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
