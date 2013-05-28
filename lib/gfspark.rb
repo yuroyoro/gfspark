@@ -26,11 +26,14 @@ module Gfspark
     app = nil
     begin
       app = Gfspark::App.new(argv)
-      app.execute
+      status = app.execute
 
     rescue => e
       puts e
-      puts e.backtrace.join("\n")
+      if app && app.debug
+        puts e.backtrace.join("\n")
+        pp app.options
+      end
       status = false
     end
 

@@ -52,10 +52,10 @@ module Gfspark::Config
     puts @opt_parse_obj.banner
     puts <<-MSG
 
-    exsamples)
-      gfspark http://your.gf.com/view_graph/your_service/your_section/your_graph?t=h
-      gfspark your_service/your_section/your_graph h --url=http://your.gf.com/view_graph
-      gfspark your_service your_section your_graph h --url=http://your.gf.com/view_graph
+  Examples:
+    gfspark http://your.gf.com/view_graph/your_service/your_section/your_graph?t=h
+    gfspark your_service/your_section/your_graph h --url=http://your.gf.com/view_graph
+    gfspark your_service your_section your_graph h --url=http://your.gf.com/view_graph
 
     MSG
     puts "  Options:"
@@ -80,7 +80,7 @@ module Gfspark::Config
 
   def opt_parser
     OptionParser.new{|opts|
-      opts.banner = '<url|path|service_name> [section_name] [graph_name]'
+      opts.banner = 'usage: gfspark <url|path|service_name> [section_name] [graph_name]'
       opts.on("--url=VALUE", "Your GrowthForecast URL"){|v| @options[:url] = v}
       opts.on('-u=USER',  '--user=USER'){|v| @options[:username] = v }
       opts.on('-p=PASS',  '--pass=PASS'){|v| @options[:password] = v }
