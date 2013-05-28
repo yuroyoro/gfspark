@@ -17,6 +17,7 @@ require "uri"
 require 'fileutils'
 require 'json'
 require 'optparse'
+require 'yaml'
 require 'term/ansicolor'
 
 module Gfspark
@@ -27,7 +28,6 @@ module Gfspark
     begin
       app = Gfspark::App.new(argv)
       status = app.execute
-
     rescue => e
       puts e
       if app && app.debug

@@ -67,7 +67,6 @@ module Gfspark::Config
     args
   end
 
-
   def detect_width_and_height!
     @stty_height, @stty_width = `stty size`.split.map(&:to_i)
 
@@ -77,6 +76,32 @@ module Gfspark::Config
     height = @options[:height].to_i
     @height = height.zero? ? 10 : height
   end
+
+  def load_default_settings
+    settings = load_default_settings_with_traversing_to_root ||
+               load_default_settings_from_home || {}
+
+    settings = Hash[*settings.map{|k,v| [k.to_sym, v]}.flatten]
+    @url     = settings[:url] if settings[:url]
+    @service = settings[:service] if settings[:service]
+    @section = settings[:section] if settings[:section]
+    @graph   = settings[:graph] if settings[:graph]
+    settings
+  end
+
+  def load_default_settings_with_traversing_to_root(dir = Dir::pwd)
+    filename = File.join(dir,  '.gfspark')
+    return YAML.load_file filename if File.exists? filename
+
+    parent = File.dirname dir
+    load_default_settings_with_traversing_to_root(parent) unless dir == parent
+  end
+
+  def load_default_settings_from_home
+    filename = File.join("~/", ".gfspark")
+    return YAML.load_file filename if File.exists? filename
+  end
+
 
   def opt_parser
     OptionParser.new{|opts|

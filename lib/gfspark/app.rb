@@ -14,7 +14,7 @@ class Gfspark::App
       return false
     end
 
-    @options = {}
+    @options = load_default_settings
     try_url(args) || try_path(args) || try_default(args)
 
     unless @url && @service && @section && @graph
@@ -32,6 +32,7 @@ class Gfspark::App
     summary = fetch(:summary)
 
     render(json, summary)
+    true
   end
 
   def fetch(api)
