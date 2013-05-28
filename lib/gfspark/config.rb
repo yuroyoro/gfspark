@@ -105,7 +105,7 @@ module Gfspark::Config
 
   def opt_parser
     OptionParser.new{|opts|
-      opts.banner = 'usage: gfspark <url|path|service_name> [section_name] [graph_name]'
+      opts.banner = "gfspark : Growth Forecast on Terminal\n\nusage: gfspark <url|path|service_name> [section_name] [graph_name]"
       opts.on("--url=VALUE", "Your GrowthForecast URL"){|v| @options[:url] = v}
       opts.on('-u=USER',  '--user=USER'){|v| @options[:username] = v }
       opts.on('-p=PASS',  '--pass=PASS'){|v| @options[:password] = v }
