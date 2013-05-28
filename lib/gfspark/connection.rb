@@ -43,7 +43,7 @@ module Gfspark::Connection
     https.verify_mode = @ssl_options[:ssl_verify_mode] || OpenSSL::SSL::VERIFY_NONE
 
     store = OpenSSL::X509::Store.new
-    if @ssl_options[:ssl_ca_cert].present?
+    unless @ssl_options[:ssl_ca_cert].nil?
       if File.directory? @ssl_options[:ssl_ca_cert]
         store.add_path @ssl_options[:ssl_ca_cert]
       else
@@ -70,7 +70,7 @@ module Gfspark::Connection
       end
 
       request.set_content_type("application/json")
-      request.body = json.to_json if json.present?
+      request.body = json.to_json unless json.nil?
 
       response = http.request(request)
       if @debug

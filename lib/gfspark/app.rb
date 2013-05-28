@@ -1,4 +1,5 @@
 class Gfspark::App
+  include Term::ANSIColor
   include ::Gfspark::Config
   include ::Gfspark::Connection
   include ::Gfspark::Graph
@@ -8,7 +9,7 @@ class Gfspark::App
     @options = {}
     try_url(args) || try_path(args) || try_default(args)
 
-    unless @url && @service && @section && @graph_name
+    unless @url && @service && @section && @graph
       raise "Invalid Arguments"
     end
 
@@ -26,7 +27,7 @@ class Gfspark::App
   def fetch(api)
     url = "#{@url}/#{api.to_s}/#{@service}/#{@section}/#{@graph}"
     queries = {}
-    queries[:t]     = @optinos[:t] || "d"
+    queries[:t]     = @options[:t] || "d"
     queries[:width] = @width
     queries[:from]  = @options[:from] if @options[:from].nil?
     queries[:to]    = @options[:to] if @options[:to].nil?

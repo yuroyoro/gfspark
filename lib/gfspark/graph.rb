@@ -16,20 +16,29 @@ module Gfspark::Graph
     max_val = (max / 8).ceil * 8
     unit  = max_val / (@height * 8).to_f
 
-    puts json["column_names"].blue
+    s = Time.at(json["start_timestamp"].to_i).strftime("%Y-%m-%d %H:%M:%S")
+    e = Time.at(json["end_timestamp"].to_i).strftime("%Y-%m-%d %H:%M:%S")
+
+    puts "  #{blue(json["column_names"].first)}"
     puts ""
-    puts period_title.center(@width)
+    puts "    #{period_title}   #{s} - #{e}"
+    puts ""
+
+    result = []
     rows.flatten.map{|row| bar(row, unit)}.transpose.reverse.each_with_index do |row, i|
       i = (@height- i)
       label = i.even? ? sprintf("%.1f", unit * i * 8) : ""
       line = row.join
       if color = @options[:color]
-        line = line.send(color)
+        line = Term::ANSIColor.send(color, line)
       end
       result << "#{sprintf("%10s", label)} | #{line} |"
     end
+    puts result.join("\n")
+    puts ""
+
     sums = summary.first.last
-    puts sprintf("cur: %.1f  ave: %.1f  max: %.1f  min %.1f", *sums).center(@width)
+    puts "    #{sprintf("cur: %.1f  ave: %.1f  max: %.1f  min %.1f", *sums)}"
   end
 
   def period_title

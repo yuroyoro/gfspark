@@ -25,11 +25,12 @@ module Gfspark
 
     app = nil
     begin
-      app = Gfspark::App.new
+      app = Gfspark::App.new(argv)
+      app.execute
 
     rescue => e
       puts e
-      puts e.backtrace.join("\n") if app && app.debug
+      puts e.backtrace.join("\n")
       status = false
     end
 
@@ -37,6 +38,7 @@ module Gfspark
   end
 end
 
-require File.dirname(__FILE__) + '/gfspark/app'
+require File.dirname(__FILE__) + '/gfspark/config'
 require File.dirname(__FILE__) + '/gfspark/connection'
 require File.dirname(__FILE__) + '/gfspark/graph'
+require File.dirname(__FILE__) + '/gfspark/app'

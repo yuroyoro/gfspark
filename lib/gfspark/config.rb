@@ -1,14 +1,15 @@
 module Gfspark::Config
 
-
   def try_url(args)
     return false unless args.first =~ /http?/
 
     u = URI.parse(args.shift)
     @url = u.to_s.gsub(u.request_uri, '')
     @graph, @section, @service = u.path.split('/').reverse
-    queries = Hash[*u.query.split("&").map{|_| _.split("=")}.flatten]
-    @options.merge!(queries)
+    if u.query
+      queries = Hash[*u.query.split("&").map{|_| k,v = _.split("=");[k.to_sym, v]}.flatten]
+      @options.merge!(queries)
+    end
     parse_options(args)
     true
   end
@@ -41,11 +42,9 @@ module Gfspark::Config
     @ssl_options = {}
     if @options.key?(:sslNoVerify) && RUBY_VERSION < "1.9.0"
       @ssl_options[:ssl_verify_mode] = OpenSSL::SSL::VERIFY_NONE
-    elsif configured_value('http.sslVerify') == "false"
-      @ssl_options[:ssl_verify_mode] = OpenSSL::SSL::VERIFY_NONE
     end
-    if (ssl_cert = configured_value('http.sslCert'))
-      @ssl_options[:ssl_ca_cert] = ssl_cert
+    if @options.key?(:sslCaCert)
+      @ssl_options[:ssl_ca_cert] = @options[:sslCaCert]
     end
   end
 
@@ -75,7 +74,8 @@ module Gfspark::Config
     width = ((@stty_width - 12) / 2).floor
     @options[:width] ||= width
     @width = @options[:width].to_i
-    @height = @options[:height].to_i || 10 rescue 10
+    height = @options[:height].to_i
+    @height = height.zero? ? 10 : height
   end
 
   def opt_parser
@@ -91,6 +91,8 @@ module Gfspark::Config
       opts.on("-w=VALUE", "--width=VALUE", "graph width.(default is deteced from $COLUMNS"){|v| @options[:width] = v}
       opts.on("-c=VALUE", "--color=VALUE", "Color of graph bar"){|v| @options[:color] = v}
       opts.on("--sslnoverify", "don't verify SSL"){|v| @options[:sslNoVerify] = true}
+      opts.on("--sslcacert=v", "SSL CA CERT"){|v| @options[:sslCaCert] = v}
+      opts.on("--debug", "debug print"){@debug= true }
     }
   end
 end

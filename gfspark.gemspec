@@ -17,6 +17,6 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  s.add_dependency 'json'
-  s.add_dependency 'term-ansicolor'
+  gem.add_dependency 'json'
+  gem.add_dependency 'term-ansicolor'
 end
