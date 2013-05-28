@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="gfspark : gfspark : Growth Forecast on Terminal" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>gfspark</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/yuroyoro/gfspark">View on GitHub</a>
+
+          <h1 id="project_title">gfspark</h1>
+          <h2 id="project_tagline">gfspark : Growth Forecast on Terminal</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/yuroyoro/gfspark/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/yuroyoro/gfspark/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>gfspark</h1>
+
+<p>Growth Forecast on Terminal.</p>
+
+<p>gfspark is CLI graph viewer for Growth Forecast.</p>
+
+<h2>Installation</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>gem 'gfspark'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install gfspark
+</code></pre>
+
+<h2>Usage</h2>
+
+<pre><code>usage: gfspark &lt;url|path|service_name&gt; [section_name] [graph_name]
+
+  Examples:
+    gfspark http://your.gf.com/view_graph/your_service/your_section/your_graph?t=h
+    gfspark your_service/your_section/your_graph h --url=http://your.gf.com/view_graph
+    gfspark your_service your_section your_graph h --url=http://your.gf.com/view_graph
+
+  Options:
+        --url=VALUE                  Your GrowthForecast URL
+    -u, --user=USER
+    -p, --pass=PASS
+    -t=VALUE                         Range of Graph
+        --from=VALUE                 Start date of graph.(2011/12/08 12:10:00) required if t=c or sc
+        --to=VALUE                   End date of graph.(2011/12/08 12:10:00) required if t=c or sc
+    -h, --height=VALUE               graph height.(default 10
+    -w, --width=VALUE                graph width.(default is deteced from $COLUMNS
+    -c, --color=VALUE                Color of graph bar
+        --sslnoverify                don't verify SSL
+        --sslcacert=v                SSL CA CERT
+        --debug                      debug print
+</code></pre>
+
+<h2>Contributing</h2>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">gfspark maintained by <a href="https://github.com/yuroyoro">yuroyoro</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
