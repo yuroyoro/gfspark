@@ -27,10 +27,16 @@ module Gfspark
     app = nil
     begin
       app = Gfspark::App.new(argv)
-      if app.valid
+      if app && app.debug
+        puts "App Instance Variables ----"
+        pp app
+        puts "---------------------------"
+      end
+
+      if app && app.valid
         status = app.execute
       else
-        app.help
+        app.help if app
         return false
       end
     rescue => e

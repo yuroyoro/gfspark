@@ -24,6 +24,7 @@ class Gfspark::App
       return
     end
 
+    @valid = true
     detect_width_and_height!
     set_ssl_options!
   end
@@ -41,8 +42,9 @@ class Gfspark::App
     queries = {}
     queries[:t]     = @options[:t] || "d"
     queries[:width] = @width
-    queries[:from]  = @options[:from] if @options[:from].nil?
-    queries[:to]    = @options[:to] if @options[:to].nil?
+    queries[:gmode] = @options[:gmode] if @options[:gmode]
+    queries[:from]  = @options[:from]  if @options[:from].nil?
+    queries[:to]    = @options[:to]    if @options[:to].nil?
 
     json = fetch_json(url, {}, queries)
   end

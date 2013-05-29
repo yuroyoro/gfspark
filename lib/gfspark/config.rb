@@ -111,6 +111,7 @@ module Gfspark::Config
       opts.on('-u=USER',  '--user=USER'){|v| @options[:username] = v }
       opts.on('-p=PASS',  '--pass=PASS'){|v| @options[:password] = v }
       opts.on("-t=VALUE", "Range of Graph"){|v| @options[:t] = v}
+      opts.on("--gmode=VALUE", "graph mode: gauge or subtract. default is gauge"){|v| @options[:gmode] = v}
       opts.on("--from=VALUE", "Start date of graph.(2011/12/08 12:10:00) required if t=c or sc"){|v| @options[:from] = v}
       opts.on("--to=VALUE", "End date of graph.(2011/12/08 12:10:00) required if t=c or sc"){|v| @options[:to] = v}
       opts.on("-h=VALUE", "--height=VALUE", "graph height.(default 10"){|v| @options[:height] = v}
