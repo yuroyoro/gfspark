@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Gfspark::Config
 
   def try_url(args)

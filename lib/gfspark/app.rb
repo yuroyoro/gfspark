@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Gfspark::App
   include Term::ANSIColor
   include ::Gfspark::Config
