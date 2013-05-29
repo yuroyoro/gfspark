@@ -18,8 +18,13 @@ class Gfspark::App
     @options = load_default_settings
     try_url(args) || try_path(args) || try_default(args)
 
-    unless @url && @service && @section && @graph
-      puts "Invalid Arguments"
+    required_args = [:url, :service, :section, :graph]
+    unless required_args.map(&:to_s).map(&"@".method(:+)).map(&method(:instance_variable_get)).inject(true, :&)
+      puts "Invalid Arguments: check arguments or your .gfspark file"
+      required_args.each do |n|
+        puts "  #{n} is required" unless instance_variable_get("@#{n}")
+      end
+      puts ""
       @valid = false
       return
     end
