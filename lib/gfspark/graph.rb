@@ -2,7 +2,7 @@
 module Gfspark::Graph
   @height = 20
 
-  BARS = ["　",  "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ]
+  BARS = ["  ",  "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ]
   def bar(val, unit, non_fullwidth_font = false)
     n = (val.to_f/unit).ceil
     @height.times.map{|i|
@@ -15,7 +15,8 @@ module Gfspark::Graph
         else
           BARS.last
         end
-        bar_symbol += " "
+        bar_symbol += " " if non_fullwidth_font
+        bar_symbol
       end
     }
   end
