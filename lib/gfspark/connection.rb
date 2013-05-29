@@ -15,7 +15,7 @@ module Gfspark::Connection
 
   def fetch_json(url, options = {}, params = {})
     response = send_request(url, {},options, params, :get)
-    raise response.code unless response_success?(response)
+    raise "#{response.code} #{response.msg}" unless response_success?(response)
     json = JSON.parse(response.body)
 
     if @debug

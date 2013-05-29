@@ -21,7 +21,7 @@ module Gfspark::Graph
     }
   end
 
-  def render(json, summary)
+  def render(json, summary, url = nil)
     rows = json['rows']
     max = rows.flatten.compact.max
     max_val = (max / 8).ceil * 8
@@ -31,6 +31,7 @@ module Gfspark::Graph
     e = Time.at(json["end_timestamp"].to_i).strftime("%Y-%m-%d %H:%M:%S")
 
     puts "  #{blue(json["column_names"].first)}"
+    puts "    #{yellow(url)}"
     puts ""
     puts "    #{period_title}   #{s} - #{e}"
     puts ""

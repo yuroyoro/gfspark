@@ -38,8 +38,20 @@ class Gfspark::App
     json    = fetch(:xport)
     summary = fetch(:summary)
 
-    render(json, summary)
+    url = to_url(:view_graph)
+    render(json, summary, url)
     true
+  end
+
+  def to_url(api)
+    url = "#{@url}/#{api.to_s}/#{@service}/#{@section}/#{@graph}"
+    queries = {}
+    queries[:t]     = @options[:t] || "d"
+    queries[:width] = @width
+    queries[:gmode] = @options[:gmode] if @options[:gmode]
+    queries[:from]  = @options[:from]  if @options[:from]
+    queries[:to]    = @options[:to]    if @options[:to]
+    "#{url}?#{queries.map{|k,v| "#{k}=#{v}"}.join("&")}"
   end
 
   def fetch(api)
