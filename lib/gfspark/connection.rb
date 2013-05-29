@@ -40,7 +40,8 @@ module Gfspark::Connection
     end
 
     https = connection(uri.host, uri.port)
-    https.use_ssl = true
+
+    https.use_ssl = true if uri.scheme == 'https'
     https.verify_mode = @ssl_options[:ssl_verify_mode] || OpenSSL::SSL::VERIFY_NONE
 
     store = OpenSSL::X509::Store.new
