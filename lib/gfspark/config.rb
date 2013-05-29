@@ -117,6 +117,7 @@ module Gfspark::Config
       opts.on("-h=VALUE", "--height=VALUE", "graph height.(default 10"){|v| @options[:height] = v}
       opts.on("-w=VALUE", "--width=VALUE", "graph width.(default is deteced from $COLUMNS"){|v| @options[:width] = v}
       opts.on("-c=VALUE", "--color=VALUE", "Color of graph bar"){|v| @options[:color] = v}
+      opts.on("-n", "--non-fullwidth-font", "Show bar symbol as fullwidth"){ @options[:non_fullwidth_font] = true }
       opts.on("--sslnoverify", "don't verify SSL"){|v| @options[:sslNoVerify] = true}
       opts.on("--sslcacert=v", "SSL CA CERT"){|v| @options[:sslCaCert] = v}
       opts.on("--debug", "debug print"){@debug= true }

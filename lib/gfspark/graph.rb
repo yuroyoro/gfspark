@@ -3,11 +3,20 @@ module Gfspark::Graph
   @height = 20
 
   BARS = ["　",  "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ]
-  def bar(val, unit)
+  def bar(val, unit, non_fullwidth_font = false)
     n = (val.to_f/unit).ceil
     @height.times.map{|i|
       x = n - (i * 8)
-      (x > 0) ?  (x < 8) ? BARS[x] : BARS.last : "　"
+      if x <= 0
+        BARS.first
+      else
+        bar_symbol = if x < 8
+          BARS[x]
+        else
+          BARS.last
+        end
+        bar_symbol += " "
+      end
     }
   end
 
@@ -26,7 +35,8 @@ module Gfspark::Graph
     puts ""
 
     result = []
-    rows.flatten.map{|row| bar(row, unit)}.transpose.reverse.each_with_index do |row, i|
+
+    rows.flatten.map{|row| bar(row, unit, @options[:non_fullwidth_font])}.transpose.reverse.each_with_index do |row, i|
       i = (@height- i)
       label = i.even? ? sprintf("%.1f", unit * i * 8) : ""
       line = row.join
