@@ -56,30 +56,31 @@ module Gfspark::Graph
 
   def period_title
     case @options[:t]
-      when "c", "sc" then sprintf(RANGES[@options[:t]], @options[:from], @options[:to])
+      when "c", "sc" then sprintf("%s to %s", @options[:from], @options[:to])
       else RANGES[@options[:t]]
     end
   end
 
-  RANGES = {
-    "y"   => 'Year (1day avg)',
-    "m"   => 'Month (2hour avg)',
-    "w"   => 'Week (30min avg)',
-    "3d"  => '3 Days (5min avg)',
-    "s3d" => '3 Days (5min avg)',
-    "d"   => 'Day (5min avg)',
-    "sd"  => 'Day (1min avg)' ,
-    "8h"  => '8 Hours (5min avg)',
-    "s8h" => '8 Hours (1min avg)' ,
-    "4h"  => '4 Hours (5min avg)',
-    "s4h" => '4 Hours (1min avg)' ,
-    "h"   => 'Hour (5min avg), ',
-    "sh"  => 'Hour (1min avg)' ,
-    "n"   => 'Half Day (5min avg)',
-    "sn"  => 'Half Day (1min avg)',
-    "c"   => "%s to $s",
-    "sc"  => "%s to $s"
-  }
+  RANGE_DEFS = [
+    ["y"   , 'Year (1day avg)'],
+    ["m"   , 'Month (2hour avg)'],
+    ["w"   , 'Week (30min avg)'],
+    ["3d"  , '3 Days (5min avg)'],
+    ["s3d" , '3 Days (5min avg)'],
+    ["d"   , 'Day (5min avg)'],
+    ["sd"  , 'Day (1min avg)' ],
+    ["8h"  , '8 Hours (5min avg)'],
+    ["s8h" , '8 Hours (1min avg)' ],
+    ["4h"  , '4 Hours (5min avg)'],
+    ["s4h" , '4 Hours (1min avg)' ],
+    ["h"   , 'Hour (5min avg), '],
+    ["sh"  , 'Hour (1min avg)' ],
+    ["n"   , 'Half Day (5min avg)'],
+    ["sn"  , 'Half Day (1min avg)'],
+    ["c"   , "Custom (5min avg)"],
+    ["sc"  , "Custom (1min avg)"]
+  ]
+  RANGES = Hash[*RANGE_DEFS.flatten]
 
   def range_arg?(t)
     RANGES.keys.include? t
