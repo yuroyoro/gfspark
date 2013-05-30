@@ -45,7 +45,7 @@ Or install it yourself as:
         -h, --height=VALUE               graph height (default 10
         -w, --width=VALUE                graph width (default is deteced from $COLUMNS)
         -c, --color=VALUE                Color of graph bar (black/red/green/yellow/blue/magenta/cyan/white)
-        -y, --y-axis-label=VALUE         Show y axis labels (hide/show/simple: default is show)
+        -x, --x-axis-label=VALUE         Show x axis labels (hide/show/simple: default is show)
         -n, --non-fullwidth-font         Show bar symbol as fullwidth
             --sslnoverify                don't verify SSL
             --sslcacert=v                SSL CA CERT

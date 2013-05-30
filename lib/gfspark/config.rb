@@ -123,7 +123,7 @@ module Gfspark::Config
       opts.on("-h=VALUE", "--height=VALUE", "graph height (default 10"){|v| @options[:height] = v}
       opts.on("-w=VALUE", "--width=VALUE", "graph width (default is deteced from $COLUMNS)"){|v| @options[:width] = v}
       opts.on("-c=VALUE", "--color=VALUE", "Color of graph bar (#{COLORS.join("/")})"){|v| @options[:color] = v if COLORS.include?(v.to_sym)}
-      opts.on("-y=VALUE", "--y-axis-label=VALUE", "Show y axis labels (hide/show/simple: default is show)"){|v| @options[:y_axis_label] = v}
+      opts.on("-x=VALUE", "--x-axis-label=VALUE", "Show x axis labels (hide/show/simple: default is show)"){|v| @options[:x_axis_label] = v}
       opts.on("-n", "--non-fullwidth-font", "Show bar symbol as fullwidth"){ @options[:non_fullwidth_font] = true }
       opts.on("--sslnoverify", "don't verify SSL"){|v| @options[:sslNoVerify] = true}
       opts.on("--sslcacert=v", "SSL CA CERT"){|v| @options[:sslCaCert] = v}

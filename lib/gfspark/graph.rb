@@ -63,7 +63,7 @@ module Gfspark::Graph
     end
     puts result.join("\n")
 
-    render_y_axis_labels(rows, start_timestamp, step)
+    render_x_axis_labels(rows, start_timestamp, step)
 
     puts ""
 
@@ -71,21 +71,21 @@ module Gfspark::Graph
     puts "    #{sprintf("cur: %.1f  ave: %.1f  max: %.1f  min %.1f", *sums)}"
   end
 
-  def render_y_axis_labels(rows, start_timestamp, step)
-    y_axis_labels = rows.length.times.select{|n| n % 4 == 0}. map{|n|
+  def render_x_axis_labels(rows, start_timestamp, step)
+    x_axis_labels = rows.length.times.select{|n| n % 4 == 0}. map{|n|
       t = Time.at(start_timestamp + (n * step)).localtime
       sprintf("%-8s", to_axis_label(t))
     }.join
-    y_axis_arrows= rows.length.times.select{|n| n % 4 == 0}. map{|n|
+    x_axis_arrows= rows.length.times.select{|n| n % 4 == 0}. map{|n|
       " /      "
     }.join
 
-    case @options[:y_axis_label]
+    case @options[:x_axis_label]
       when "show"
-        puts sprintf("%10s%s", "", y_axis_arrows)
-        puts sprintf("%10s%s", "", y_axis_labels)
+        puts sprintf("%10s%s", "", x_axis_arrows)
+        puts sprintf("%10s%s", "", x_axis_labels)
       when "simple"
-        puts sprintf("%10s%s", "", y_axis_labels)
+        puts sprintf("%10s%s", "", x_axis_labels)
      end
   end
 
