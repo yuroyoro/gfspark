@@ -21,8 +21,20 @@ module Gfspark::Graph
     }
   end
 
+  def seconds_to_label(sec)
+    t = Time.at(sec).utc
+    d, h, m, s = t.day.pred, t.hour, t.min, t.sec
+    res = ""
+    res += "#{d}day" unless d.zero?
+    res += "#{h}h"   unless h.zero? && (d.zero? || (m.zero? && s.zero?))
+    res += "#{m}min" unless m.zero? && ((d.zero? && h.zero?) || s.zero?)
+    res += "#{s}sec" unless s.zero?
+    return res
+  end
+
   def render(json, summary, url = nil)
     rows = json['rows']
+    step = json['step'].to_i
     max = rows.flatten.compact.max
     max_val = (max / 8).ceil * 8
     unit  = max_val / (@height * 8).to_f
@@ -33,7 +45,7 @@ module Gfspark::Graph
     puts "  #{blue(json["column_names"].first)}"
     puts "    #{yellow(url)}"
     puts ""
-    puts "    #{period_title}   #{s} - #{e}"
+    puts "    #{period_title}   #{s} - #{e}  step: /#{seconds_to_label(step)}"
     puts ""
 
     result = []
@@ -45,7 +57,7 @@ module Gfspark::Graph
       if color = @options[:color]
         line = Term::ANSIColor.send(color, line)
       end
-      result << "#{sprintf("%10s", label)} | #{line} |"
+      result << "#{sprintf("%10s", label)} |#{line}|"
     end
     puts result.join("\n")
     puts ""

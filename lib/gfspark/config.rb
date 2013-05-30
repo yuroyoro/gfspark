@@ -76,7 +76,7 @@ module Gfspark::Config
   def detect_width_and_height!
     @stty_height, @stty_width = `stty size`.split.map(&:to_i)
 
-    width = ((@stty_width - 12) / 2).floor
+    width = ((@stty_width - 15) / 2).floor
     @options[:width] ||= width
     @width = @options[:width].to_i
     height = @options[:height].to_i
