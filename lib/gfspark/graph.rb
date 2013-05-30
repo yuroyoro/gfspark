@@ -33,14 +33,16 @@ module Gfspark::Graph
   end
 
   def render(json, summary, url = nil)
-    rows = json['rows']
-    step = json['step'].to_i
-    max = rows.flatten.compact.max
+    rows    = json['rows']
+    step    = json['step'].to_i
+    max     = rows.flatten.compact.max
     max_val = (max / 8).ceil * 8
-    unit  = max_val / (@height * 8).to_f
+    unit    = max_val / (@height * 8).to_f
 
-    s = Time.at(json["start_timestamp"].to_i).strftime("%Y-%m-%d %H:%M:%S")
-    e = Time.at(json["end_timestamp"].to_i).strftime("%Y-%m-%d %H:%M:%S")
+    start_timestamp = json["start_timestamp"].to_i
+    end_timestamp   = json["end_timestamp"].to_i
+    s = Time.at(start_timestamp).localtime.strftime("%Y-%m-%d %H:%M:%S")
+    e = Time.at(end_timestamp  ).localtime.strftime("%Y-%m-%d %H:%M:%S")
 
     puts "  #{blue(json["column_names"].first)}"
     puts "    #{yellow(url)}"
@@ -60,10 +62,46 @@ module Gfspark::Graph
       result << "#{sprintf("%10s", label)} |#{line}|"
     end
     puts result.join("\n")
+
+    render_y_axis_labels(rows, start_timestamp, step)
+
     puts ""
 
     sums = summary.first.last
     puts "    #{sprintf("cur: %.1f  ave: %.1f  max: %.1f  min %.1f", *sums)}"
+  end
+
+  def render_y_axis_labels(rows, start_timestamp, step)
+    y_axis_labels = rows.length.times.select{|n| n % 4 == 0}. map{|n|
+      t = Time.at(start_timestamp + (n * step)).localtime
+      sprintf("%-8s", to_axis_label(t))
+    }.join
+    y_axis_arrows= rows.length.times.select{|n| n % 4 == 0}. map{|n|
+      " /      "
+    }.join
+
+    case @options[:y_axis_label]
+      when "show"
+        puts sprintf("%10s%s", "", y_axis_arrows)
+        puts sprintf("%10s%s", "", y_axis_labels)
+      when "simple"
+        puts sprintf("%10s%s", "", y_axis_labels)
+     end
+  end
+
+  def axis_unit
+    @axis_unit ||= RANGE_DEFS.find{|_| _.first == @options[:t]}.last
+  end
+
+  def to_axis_label(t)
+    case axis_unit
+      when :min   then t.strftime("%M")
+      when :hour  then t.strftime("%H:%M")
+      when :day   then t.strftime("%d")
+      when :week  then t.strftime("%a")
+      when :month then t.strftime("%m")
+      else             t.strftime("%H:%M")
+    end
   end
 
   def period_title
@@ -74,25 +112,26 @@ module Gfspark::Graph
   end
 
   RANGE_DEFS = [
-    ["y"   , 'Year (1day avg)'],
-    ["m"   , 'Month (2hour avg)'],
-    ["w"   , 'Week (30min avg)'],
-    ["3d"  , '3 Days (5min avg)'],
-    ["s3d" , '3 Days (5min avg)'],
-    ["d"   , 'Day (5min avg)'],
-    ["sd"  , 'Day (1min avg)' ],
-    ["8h"  , '8 Hours (5min avg)'],
-    ["s8h" , '8 Hours (1min avg)' ],
-    ["4h"  , '4 Hours (5min avg)'],
-    ["s4h" , '4 Hours (1min avg)' ],
-    ["h"   , 'Hour (5min avg), '],
-    ["sh"  , 'Hour (1min avg)' ],
-    ["n"   , 'Half Day (5min avg)'],
-    ["sn"  , 'Half Day (1min avg)'],
-    ["c"   , "Custom (5min avg)"],
-    ["sc"  , "Custom (1min avg)"]
+    # option, label, y-axis unit
+    ["y"   , 'Year (1day avg)'     , :month],
+    ["m"   , 'Month (2hour avg)'   , :day  ],
+    ["w"   , 'Week (30min avg)'    , :week ],
+    ["3d"  , '3 Days (5min avg)'   , :hour ],
+    ["s3d" , '3 Days (5min avg)'   , :hour ],
+    ["d"   , 'Day (5min avg)'      , :hour ],
+    ["sd"  , 'Day (1min avg)'      , :hour ],
+    ["8h"  , '8 Hours (5min avg)'  , :hour ],
+    ["s8h" , '8 Hours (1min avg)'  , :hour ],
+    ["4h"  , '4 Hours (5min avg)'  , :hour ],
+    ["s4h" , '4 Hours (1min avg)'  , :hour ],
+    ["h"   , 'Hour (5min avg)'     , :min  ],
+    ["sh"  , 'Hour (1min avg)'     , :min  ],
+    ["n"   , 'Half Day (5min avg)' , :hour ],
+    ["sn"  , 'Half Day (1min avg)' , :hour ],
+    ["c"   , "Custom (5min avg)"   , :min  ],
+    ["sc"  , "Custom (1min avg)"   , :min  ]
   ]
-  RANGES = Hash[*RANGE_DEFS.flatten]
+  RANGES = Hash[*RANGE_DEFS.map{|k,v,_| [k,v]}.flatten]
 
   def range_arg?(t)
     RANGES.keys.include? t

@@ -29,6 +29,14 @@ class Gfspark::App
       return
     end
 
+    @options[:t] ||= "d"
+    unless RANGES.keys.include?(@options[:t])
+      puts "Unknown graph range t=#{@options[:t]}"
+      @valid = false
+      return
+    end
+
+    @options[:y_axis_label] ||= "show"
     @valid = true
     detect_width_and_height!
     set_ssl_options!

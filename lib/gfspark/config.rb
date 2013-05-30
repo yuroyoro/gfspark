@@ -64,7 +64,7 @@ module Gfspark::Config
     puts <<-MSG
 
     -t option detail:
-#{Gfspark::Graph::RANGE_DEFS.map{|k,v| sprintf("      %3s : %s", k, v)}.join("\n")}
+#{Gfspark::Graph::RANGE_DEFS.map{|k,v,_| sprintf("      %3s : %s", k, v)}.join("\n")}
     MSG
   end
 
@@ -76,7 +76,7 @@ module Gfspark::Config
   def detect_width_and_height!
     @stty_height, @stty_width = `stty size`.split.map(&:to_i)
 
-    width = ((@stty_width - 15) / 2).floor
+    width = ((@stty_width - 18) / 2).floor
     @options[:width] ||= width
     @width = @options[:width].to_i
     height = @options[:height].to_i
@@ -116,13 +116,14 @@ module Gfspark::Config
       opts.on("--url=VALUE", "Your GrowthForecast URL"){|v| @options[:url] = v}
       opts.on('-u=USER',  '--user=USER'){|v| @options[:username] = v }
       opts.on('-p=PASS',  '--pass=PASS'){|v| @options[:password] = v }
-      opts.on("-t=VALUE", "Range of Graph"){|v| @options[:t] = v}
+      opts.on("-t=VALUE", "--type=VALUE", "Range of Graph"){|v| @options[:t] = v}
       opts.on("--gmode=VALUE", "graph mode: gauge or subtract (default is gauge)"){|v| @options[:gmode] = v}
       opts.on("--from=VALUE", "Start date of graph (2011/12/08 12:10:00) required if t=c or sc"){|v| @options[:from] = v}
       opts.on("--to=VALUE", "End date of graph (2011/12/08 12:10:00) required if t=c or sc"){|v| @options[:to] = v}
       opts.on("-h=VALUE", "--height=VALUE", "graph height (default 10"){|v| @options[:height] = v}
       opts.on("-w=VALUE", "--width=VALUE", "graph width (default is deteced from $COLUMNS)"){|v| @options[:width] = v}
       opts.on("-c=VALUE", "--color=VALUE", "Color of graph bar (#{COLORS.join("/")})"){|v| @options[:color] = v if COLORS.include?(v.to_sym)}
+      opts.on("-y=VALUE", "--y-axis-label=VALUE", "Show y axis labels (hide/show/simple: default is show)"){|v| @options[:y_axis_label] = v}
       opts.on("-n", "--non-fullwidth-font", "Show bar symbol as fullwidth"){ @options[:non_fullwidth_font] = true }
       opts.on("--sslnoverify", "don't verify SSL"){|v| @options[:sslNoVerify] = true}
       opts.on("--sslcacert=v", "SSL CA CERT"){|v| @options[:sslCaCert] = v}
