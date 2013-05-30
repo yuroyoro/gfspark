@@ -20,7 +20,8 @@ Or install it yourself as:
 
 ## ScreenShots
 
-<img src='https://github.com/yuroyoro/gfspark/raw/master/images/gfspark_screenshot.png' width='600'/>
+<img src='https://github.com/yuroyoro/gfspark/raw/master/images/gfspark_screenshot1.png' width='600'/>
+<img src='https://github.com/yuroyoro/gfspark/raw/master/images/gfspark_screenshot2.png' width='600'/>
 
 ## Usage
 
@@ -37,13 +38,14 @@ Or install it yourself as:
             --url=VALUE                  Your GrowthForecast URL
         -u, --user=USER
         -p, --pass=PASS
-        -t=VALUE                         Range of Graph
+        -t, --type=VALUE                 Range of Graph
             --gmode=VALUE                graph mode: gauge or subtract (default is gauge)
             --from=VALUE                 Start date of graph (2011/12/08 12:10:00) required if t=c or sc
             --to=VALUE                   End date of graph (2011/12/08 12:10:00) required if t=c or sc
         -h, --height=VALUE               graph height (default 10
         -w, --width=VALUE                graph width (default is deteced from $COLUMNS)
         -c, --color=VALUE                Color of graph bar (black/red/green/yellow/blue/magenta/cyan/white)
+        -y, --y-axis-label=VALUE         Show y axis labels (hide/show/simple: default is show)
         -n, --non-fullwidth-font         Show bar symbol as fullwidth
             --sslnoverify                don't verify SSL
             --sslcacert=v                SSL CA CERT
@@ -61,7 +63,7 @@ Or install it yourself as:
           s8h : 8 Hours (1min avg)
            4h : 4 Hours (5min avg)
           s4h : 4 Hours (1min avg)
-            h : Hour (5min avg),
+            h : Hour (5min avg)
            sh : Hour (1min avg)
             n : Half Day (5min avg)
            sn : Half Day (1min avg)
@@ -70,7 +72,7 @@ Or install it yourself as:
 
 gfspark does not supports "COMPLEX GRAPH".
 if graph output is broken, try `--non-fullwidth-font` option.
-For example, your Terminal font is "Rickty", then it'll be fix graph output problem.
+For example, if your Terminal font is "Rickty", then it'll be fix graph output problem.
 
 ## Configuration
 
